@@ -26,12 +26,12 @@ def read():
     for column in column_data:
         # Получим данные всех задач в колонке и перечислим все названия
         task_data = requests.get(base_url.format('lists') + '/' + column['id'] + '/cards', params=auth_params).json()
-        print(f"Колонка {column['name']} содержит {len(task_data)} тасков:")
+        print(f"Колонка {column['name']}, id {column['id']} содержит {len(task_data)} тасков:")
         if not task_data:
             print('\t' + 'Нет задач!')
             continue
         for task in task_data:
-            print('\t' + task['name'])
+            print(f"\t{task['name']}, 'id' {task['id']}")
 
 
 def create(name, column_name):
