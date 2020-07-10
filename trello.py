@@ -2,6 +2,7 @@ import sys
 
 import requests
 
+
 # Данные авторизации в API Trello
 auth_params = {
     'key': "",  # необходимо добавить свой key
@@ -79,23 +80,25 @@ def move(name, column_name):
 
     # Среди всех колонок нужно найти задачу по имени и получить её id
     task_id = None
+    tasks, i = [], 0
     for column in column_data:
         column_tasks = requests.get(base_url.format('lists') + '/' + column['id'] + '/cards', params=auth_params).json()
         for task in column_tasks:
             if task['name'] == name:
                 task_id = task['id']
-                break
-        if task_id:
-            break
+                tasks.append({task['name']: task['id']})
 
-            # Теперь, когда у нас есть id задачи, которую мы хотим переместить
     # Переберём данные обо всех колонках, пока не найдём ту, в которую мы будем перемещать задачу
     for column in column_data:
         if column['name'] == column_name:
-            # И выполним запрос к API для перемещения задачи в нужную колонку
+            if len(tasks) > 1:
+                for t in tasks:
+                    for k, v in t.items():
+                        i += 1
+                        print(f'{i}. {k}, id: {v}')
+                task_id = str(input('Введите id задачи: '))
             requests.put(base_url.format('cards') + '/' + task_id + '/idList',
-                         data={'value': column['id'], **auth_params})
-            break
+                            data={'value': column['id'], **auth_params})
 
 
 if __name__ == "__main__":
