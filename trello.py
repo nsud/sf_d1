@@ -4,13 +4,13 @@ import requests
 
 # Данные авторизации в API Trello
 auth_params = {
-    'key': "b920e2674e5f38f4135978974dad3bf7",
-    'token': "9f7e4d26f1329c7d202bbd474b5c1adeb9b41272824689aa72bc57c67ca7a05e"
+    'key': "",  # необходимо добавить свой key
+    'token': "" # необходимо добавить свой token
     }
 
 base_url = "https://api.trello.com/1/{}"
 
-board_id = 'zKLx9SkJ'
+board_id = ''   # необходимо добавить свой board_id
 
 
 def columns():
